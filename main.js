@@ -89,7 +89,7 @@ app.get('/api/boardgames/category/:category', (req, res) => {
 
 //GET /api/boardgames/:id
 //db.getCollection('games').find({name: ""})
-app.get('/api/boardgames/:id', (req, res) => {
+app.get('/api/boardgame/:id', (req, res) => {
     console.log('id:', req.params.id)
 
     const id = parseInt(req.params.id);
@@ -116,14 +116,14 @@ app.get('/api/boardgames/:id', (req, res) => {
 
 //GET /api/comments/:name
 //db.getCollection('bgg-13m-reviews').find({name: ""})
-app.get('/api/comments/:name', (req, res) => {
-    console.log('name: ', req.params.name)
+app.get('/api/comments/:id', (req, res) => {
+    console.log('Id: ', req.params.id)
 
-    const name = req.params.name;
+    const id = parseInt(req.params.id);
 
     client.db('boardgame')
-        .collection('bgg-13m-reviews')
-        .find({ name: name })
+        .collection('comments')
+        .find({ ID: id })
         //.project({ Name: 1, ID: 1 })
         .limit(10)
         .toArray()
