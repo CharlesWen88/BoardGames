@@ -8,9 +8,9 @@ const PORT = parseInt(process.argv[2] || process.env.APP_PORT) || 3000;
 
 // Load configuration 
 const config = require('./config.json');
-//const URL = config.mongo || 'mongodb://localhost:27017';
+const URL = config.mongo || 'mongodb://localhost:27017';
 //const URL = "mongodb://wilma:123@hydra-shard-00-00-ppljg.gcp.mongodb.net:27017,hydra-shard-00-01-ppljg.gcp.mongodb.net:27017,hydra-shard-00-02-ppljg.gcp.mongodb.net:27017/test?ssl=true&replicaSet=Hydra-shard-0&authSource=admin&retryWrites=true&w=majority";
-const URL = "mongodb+srv://wilma:wilma@hydra-u1vel.gcp.mongodb.net/test?retryWrites=true&w=majority";
+//const URL = "mongodb+srv://wilma:wilma@hydra-u1vel.gcp.mongodb.net/test?retryWrites=true&w=majority";
 
 // Create an instance of MongoClient
 const client = new MongoClient(URL, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -200,6 +200,8 @@ app.post('/api/comments', (req, res) => {
     res.redirect('back');
     }
 )
+
+app.use(express.static(__dirname + '/dist'));
 
 //Start the server - listening to a port of our choosing
 //Connect to mongo/boardgame
