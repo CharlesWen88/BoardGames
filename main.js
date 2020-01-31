@@ -24,6 +24,8 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.use(express.static(__dirname + '/dist'));
+
 //GET /api/boardgames/name/:name
 //db.getCollection('games').find({name: ""})
 app.get('/api/boardgames/name/:name', (req, res) => {
@@ -201,7 +203,10 @@ app.post('/api/comments', (req, res) => {
     }
 )
 
-app.use(express.static(__dirname + '/dist'));
+/* final catch-all route to index.html defined last */
+app.get('/*', (req, res) => {
+    res.sendFile(__dirname + '/dist/index.html');
+  })
 
 //Start the server - listening to a port of our choosing
 //Connect to mongo/boardgame
