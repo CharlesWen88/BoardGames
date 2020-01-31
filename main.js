@@ -88,7 +88,7 @@ app.get('/api/boardgames/category/:category', (req, res) => {
 )
 
 //GET /api/boardgames/:id
-//db.getCollection('games').find({name: ""})
+//db.getCollection('games').find({id: ""})
 app.get('/api/boardgame/:id', (req, res) => {
     console.log('id:', req.params.id)
 
@@ -97,6 +97,33 @@ app.get('/api/boardgame/:id', (req, res) => {
     client.db('boardgame')
         .collection('games')
         .findOne({ ID: id })
+        .then(result => {
+            res.type('application/json');
+            if (!result) {
+                res.status(404)
+                res.json({ message: `Not found: ${id}` })
+            } else {
+                res.status(200)
+                res.json(result);
+            }
+        })
+        .catch(error => {
+            res.status(404)
+            res.json({ message: error });
+        })
+    }
+)
+
+//GET /api/boardgames/details/:id
+//db.getCollection('games_details').find({id: ""})
+app.get('/api/boardgame/details/:id', (req, res) => {
+    console.log('Id: ', req.params.id)
+
+    const id = parseInt(req.params.id);
+
+    client.db('boardgame')
+        .collection('games_details')
+        .findOne({ id: id })
         .then(result => {
             res.type('application/json');
             if (!result) {
